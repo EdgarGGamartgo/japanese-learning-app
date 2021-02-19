@@ -1,3 +1,6 @@
+api/node_modules
+language-mobile-app/node_modules
+language-web-app/node_modules
 # Logs
 logs
 *.log
