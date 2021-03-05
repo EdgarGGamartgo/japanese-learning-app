@@ -1,7 +1,8 @@
 import express from 'express'
 import 'express-async-errors'
+import * as dotenv from 'dotenv';
 import { json } from 'body-parser'
-import { errorHandler, NotFoundError } from '@oregtickets/common'
+import { errorHandler, NotFoundError, currentUser } from '@oregtickets/common'
 import cookieSession from 'cookie-session'
 import { authController } from './controllers/authController'
 import { videoController } from './controllers/videoController'
@@ -11,10 +12,12 @@ app.set('trust proxy', true)
 app.use(json())
 app.use(cookieSession({
   signed: false,
-  secure: process.env.NODE_ENV !== 'test'  
 // This allows request comming only from https connections.
+  // secure: process.env.NODE_ENV !== 'test'  
 // Plain http requests will not work.
 }))
+dotenv.config();
+app.use(currentUser);
 
 app.use(videoController)
 app.use(authController)
